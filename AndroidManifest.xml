@@ -6,7 +6,10 @@
     <uses-sdk android:minSdkVersion="10" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission><application android:label="@string/app_name" android:icon="@drawable/ic_app">
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<application android:label="@string/app_name" android:icon="@drawable/ic_app">
         <activity android:name="com.yannick.diary.DiaryListActivity" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,6 +3,7 @@ package com.yannick.diary.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -15,8 +16,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + Diary.DiaryItem.TABLE_NAME + " (" +
                 Diary.DiaryItem.COLUMN_NAME_ID + " INTEGER PRIMARY KEY," + 
                 Diary.DiaryItem.COLUMN_NAME_DESCRIPTION + " TEXT, " +
-                Diary.DiaryItem.COLUMN_NAME_TITLE + " REAL, " + 
-                Diary.DiaryItem.COLUMN_NAME_DIARY_DATE + " REAL " +
+                Diary.DiaryItem.COLUMN_NAME_TITLE + " TEXT, " + 
+                Diary.DiaryItem.COLUMN_NAME_DIARY_DATE + " REAL, " +
+                Diary.DiaryItem.COLUMN_NAME_LATITUDE + " TEXT, " + 
+                Diary.DiaryItem.COLUMN_NAME_LONGITUDE + " TEXT " + 
                 ");";
     
     public DatabaseHelper(Context context) {
@@ -42,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// NOTE: the db passed in here seems to be linked to the file system
 		// The exec does effect the database.
 		db.execSQL(DIARY_TABLE_CREATE);
+		Log.i("SQL Log",DIARY_TABLE_CREATE);
 	}
 
 	/**

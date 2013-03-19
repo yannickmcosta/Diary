@@ -40,6 +40,8 @@ public class DAO {
         sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_DESCRIPTION, Diary.DiaryItem.COLUMN_NAME_DESCRIPTION);  
         sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_TITLE, Diary.DiaryItem.COLUMN_NAME_TITLE);  
         sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_DIARY_DATE, Diary.DiaryItem.COLUMN_NAME_DIARY_DATE);  
+        sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_LATITUDE, Diary.DiaryItem.COLUMN_NAME_LATITUDE);
+        sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_LONGITUDE, Diary.DiaryItem.COLUMN_NAME_LONGITUDE);
             	
     }
     
@@ -147,6 +149,16 @@ public class DAO {
          diaryValues.put(Diary.DiaryItem.COLUMN_NAME_TITLE, r.getString(android.R.string.untitled));
      }
      
+     if (diaryValues.containsKey(Diary.DiaryItem.COLUMN_NAME_LATITUDE) == false) {
+    	 Resources r = Resources.getSystem();
+         diaryValues.put(Diary.DiaryItem.COLUMN_NAME_LATITUDE, r.getString(android.R.string.untitled));
+     }
+     
+     if (diaryValues.containsKey(Diary.DiaryItem.COLUMN_NAME_LONGITUDE) == false) {
+    	 Resources r = Resources.getSystem();
+         diaryValues.put(Diary.DiaryItem.COLUMN_NAME_LONGITUDE, r.getString(android.R.string.untitled));
+     }
+     
      // Opens the database object in "write" mode.
      SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -172,14 +184,14 @@ public class DAO {
 	 * @param projection the columns to populate in the cursor
 	 * @return a Cursor containing the data for the Expense item
 	 */
-	public Cursor queryDiaryById(int expenseId, String[] projection)
+	public Cursor queryDiaryById(int diaryId, String[] projection)
 	{
 	       // Constructs a new query builder and sets its table name
 	       SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 	       qb.setTables(Diary.DiaryItem.TABLE_NAME);
 	       qb.appendWhere(Diary.DiaryItem.COLUMN_NAME_ID +    // the name of the ID column
 	    	        "=" +
-	    	        expenseId);
+	    	        diaryId);
 	       return performQuery(qb, projection, null, null, null);		
 	}
 	
@@ -253,14 +265,14 @@ public class DAO {
 	 * @param values
 	 * @return
 	 */
-    public int updateDiaryById( int expenseId, ContentValues values) {
+    public int updateDiaryById( int diaryId, ContentValues values) {
 
         // Opens the database object in "write" mode.
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int count;
         String where =
                         Diary.DiaryItem.COLUMN_NAME_ID +                              // The ID column name
-                        " = " +  expenseId;                                        // test for equality
+                        " = " +  diaryId;                                        // test for equality
 
         // Does the update and returns the number of rows updated.
         count = db.update(

@@ -49,6 +49,11 @@ public class DiaryEntryActivity extends Activity {
 	private int mYear;
 	private int mMonth;
 	private int mDay;	
+	
+	/** Fields relating to GPS and Location */
+	
+	private TextView mLatitude;
+	private TextView mLongitude;
 
 	private long mDiaryId; // Diary item associated with this activity
 	private Uri mUri;
@@ -69,6 +74,10 @@ public class DiaryEntryActivity extends Activity {
 		mDiaryDate = (TextView) findViewById(R.id.expEdt_et_date);
 		mReceiptButton = (ImageButton) findViewById(R.id.expEdt_ib_receipt);
 		mReceiptImg = (ImageView) findViewById(R.id.expEdt_im_receipt);
+		
+		mLatitude = (TextView) findViewById(R.id.locEdt_et_lat);
+		mLongitude = (TextView) findViewById(R.id.locEdt_et_lon);
+		
 
 		// Call local helper method configureCursorForActivity()
 		configureCursorForActivity();

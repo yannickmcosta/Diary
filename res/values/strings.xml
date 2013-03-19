@@ -16,4 +16,6 @@
     <string name="toast_str_exporting_csv">Exporting Diary as a CSV</string>
     <string name="menu_str_export">Export as CSV</string>
     <string name="str_cam_msg">Press center button of D-Pad to take picture</string>
+    <string name="locEdt_str_lat">Latitude: </string>
+    <string name="locEdt_str_lon">Longitude: </string>
 </resources>

@@ -18,23 +18,25 @@ public final class R {
         public static final int receipt=0x7f020004;
     }
     public static final class id {
-        public static final int add=0x7f06000d;
+        public static final int add=0x7f06000f;
         public static final int camEm_img=0x7f060000;
-        public static final int delete=0x7f06000c;
-        public static final int edit=0x7f06000b;
+        public static final int delete=0x7f06000e;
+        public static final int edit=0x7f06000d;
         public static final int expEdt_bt_save=0x7f060009;
         public static final int expEdt_et_date=0x7f060002;
-        public static final int expEdt_et_description=0x7f060004;
-        public static final int expEdt_et_title=0x7f060006;
+        public static final int expEdt_et_description=0x7f060006;
+        public static final int expEdt_et_title=0x7f060004;
         public static final int expEdt_ib_receipt=0x7f060008;
-        public static final int expEdt_im_receipt=0x7f06000a;
+        public static final int expEdt_im_receipt=0x7f06000c;
         public static final int expEdt_tv_date=0x7f060001;
-        public static final int expEdt_tv_description=0x7f060003;
-        public static final int expEdt_tv_title=0x7f060005;
+        public static final int expEdt_tv_description=0x7f060005;
+        public static final int expEdt_tv_title=0x7f060003;
         public static final int linearLayout1=0x7f060007;
-        public static final int menu_add=0x7f06000e;
-        public static final int menu_export=0x7f060010;
-        public static final int menu_sync=0x7f06000f;
+        public static final int locEdt_et_lat=0x7f06000a;
+        public static final int locEdt_et_lon=0x7f06000b;
+        public static final int menu_add=0x7f060010;
+        public static final int menu_export=0x7f060012;
+        public static final int menu_sync=0x7f060011;
     }
     public static final class layout {
         public static final int camera_emulator_layout=0x7f030000;
@@ -55,6 +57,8 @@ public final class R {
         public static final int expEdt_str_save=0x7f040006;
         public static final int expEdt_str_title=0x7f040003;
         public static final int hello=0x7f040000;
+        public static final int locEdt_str_lat=0x7f040010;
+        public static final int locEdt_str_lon=0x7f040011;
         public static final int main_str_add=0x7f040008;
         public static final int menu_str_delete=0x7f04000a;
         public static final int menu_str_edit=0x7f040009;

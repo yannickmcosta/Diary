@@ -52,14 +52,17 @@ public class DiaryListActivity extends ListActivity {
         // The first parameter is the URI for the ContentProvider which is accessed via intent.getData()
         // The remaining parameters are the same as the ones passed into queryExpenses with the addition 
         // of a sort order parameter (ascending / descending)
+		Log.v("DiaryListActivity", "Just Before The Projections");
+		//Log.i("SQL Log",com.yannick.diary.data.DatabaseHelper.DIARY_TABLE_CREATE); Need to make diary_table_create public for this to work
         Cursor cursor = managedQuery(
             	intent.getData(), 						// Use the default content URI for the provider.
-                Diary.DiaryItem.LIST_PROJECTION,    					// Return the expense description and amount
+                Diary.DiaryItem.LIST_PROJECTION,    	// Return the expense description and amount
                 null,                             		// No where clause, return all records.
                 null,                             		// No where clause, therefore no where column values.
                 Diary.DiaryItem.DEFAULT_SORT_ORDER  // Use the default sort order.
             );        
-        
+		Log.v("DiaryListActivity", "Just After The Projections");
+
         
 		// The names of the cursor columns to display in the view, initialized
 		// to the description column
@@ -67,10 +70,10 @@ public class DiaryListActivity extends ListActivity {
         // and the resource ID's to use to display them
         // android.R.id.text1 is a built in resource to show simple text
         // Note that this is the same as when we used the DAO 
-        String[] dataColumns = { Diary.DiaryItem.COLUMN_NAME_DESCRIPTION } ;
+        String[] dataColumns = { Diary.DiaryItem.COLUMN_NAME_TITLE } ;
         int[] viewIDs = { android.R.id.text1 };
+		Log.v("DiaryListActivity", "Just After The dataColumns");
 
-        
         // Create a new SimpleCursorAdapter
         // Creates the backing adapter for the ListView.
         // Note that this is the same as when we used the DAO

@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 public final class Diary implements java.io.Serializable{
 	
@@ -23,7 +24,9 @@ public final class Diary implements java.io.Serializable{
 	 */
 	public String description;
 	public String title;
-	public long diaryDate;	
+	public long diaryDate;
+	public String latitude;
+	public String longitude;
 
 	/**
 	 * Create an Expenses instance from a ContentValues object
@@ -33,13 +36,18 @@ public final class Diary implements java.io.Serializable{
 		description = values.getAsString(Diary.DiaryItem.COLUMN_NAME_DESCRIPTION );
 		title = values.getAsString(Diary.DiaryItem.COLUMN_NAME_TITLE);
 		diaryDate = values.getAsLong(Diary.DiaryItem.COLUMN_NAME_DIARY_DATE);
+		latitude = values.getAsString(Diary.DiaryItem.COLUMN_NAME_LATITUDE);
+		longitude = values.getAsString(Diary.DiaryItem.COLUMN_NAME_LONGITUDE);
+
 	}
 	
-	public Diary(String description, String title, long date ){
+	public Diary(String description, String title, long date, String latitude, String longitude){
 		this.description = description;
 		this.title = title;
 		diaryDate = date;
-
+		this.latitude = latitude;
+		this.longitude = longitude;
+		
 	}	
 	
     /*
@@ -54,8 +62,9 @@ public final class Diary implements java.io.Serializable{
         v.put(Diary.DiaryItem.COLUMN_NAME_DESCRIPTION, description);
         v.put(Diary.DiaryItem.COLUMN_NAME_TITLE, title);
         v.put(Diary.DiaryItem.COLUMN_NAME_DIARY_DATE, diaryDate);
+        v.put(Diary.DiaryItem.COLUMN_NAME_LATITUDE, latitude);
+        v.put(Diary.DiaryItem.COLUMN_NAME_LONGITUDE, longitude);
         return v;
-
     }    	
 	
 	/**
@@ -156,8 +165,11 @@ public final class Diary implements java.io.Serializable{
          * Column name for the creation timestamp
          * <P>Type: INTEGER (long from System.curentTimeMillis())</P>
          */
-        public static final String COLUMN_NAME_DIARY_DATE = "incurred";       
+        public static final String COLUMN_NAME_DIARY_DATE = "date";
         
+        public static final String COLUMN_NAME_LATITUDE = "latitude";
+        
+        public static final String COLUMN_NAME_LONGITUDE = "longitude";
         
         public static final String COLUMN_NAME_ID = BaseColumns._ID;
         
@@ -165,14 +177,20 @@ public final class Diary implements java.io.Serializable{
         public static final String[] FULL_PROJECTION = {
                 COLUMN_NAME_DESCRIPTION,
                 COLUMN_NAME_TITLE,
-                COLUMN_NAME_DIARY_DATE
+                COLUMN_NAME_DIARY_DATE,
+                COLUMN_NAME_LATITUDE,
+                COLUMN_NAME_LONGITUDE
             };        
         
         public static final String[] LIST_PROJECTION =
             new String[] {
                 Diary.DiaryItem._ID,
                 Diary.DiaryItem.COLUMN_NAME_DESCRIPTION,
-                Diary.DiaryItem.COLUMN_NAME_TITLE
+                Diary.DiaryItem.COLUMN_NAME_TITLE,
+                //Diary.DiaryItem.COLUMN_NAME_DIARY_DATE,	//TESTING
+                //Diary.DiaryItem.COLUMN_NAME_LATITUDE,
+                //Diary.DiaryItem.COLUMN_NAME_LONGITUDE
+                
         };            
 
 	}
@@ -192,7 +210,7 @@ public final class Diary implements java.io.Serializable{
 				diary = new Diary[rows];
 				int i=0;
 				while(cursor.moveToNext()){
-					diary[i++] = new Diary( cursor.getString(0), cursor.getString(1), cursor.getLong(2));
+					diary[i++] = new Diary( cursor.getString(0), cursor.getString(1), cursor.getLong(2), cursor.getString(3), cursor.getString(4));
 				}
 			}
 			return diary;
@@ -202,7 +220,8 @@ public final class Diary implements java.io.Serializable{
 			JSONObject jObj = new JSONObject();
 			jObj.put("description", e.description);
 			jObj.put("title", e.title);
-			jObj.put("diaryDate", e.diaryDate);
+			jObj.put("latitude", e.latitude);
+			jObj.put("longitude", e.longitude);
 			return jObj;
 		}
 		
@@ -229,6 +248,10 @@ public final class Diary implements java.io.Serializable{
 			builder.append(e.title);
 			builder.append(',');
 			builder.append(e.diaryDate);
+			builder.append(',');
+			builder.append(e.latitude);
+			builder.append(',');
+			builder.append(e.longitude);
 			builder.append('\n');
 			return builder;
 		}	

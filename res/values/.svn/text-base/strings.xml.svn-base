@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, HomeActivity</string>
+    <string name="app_name">Expenses 6.2</string>
+    <string name="expEdt_str_date">Date</string>
+    <string name="expEdt_str_description">Description</string>
+    <string name="expEdt_str_amount">Amount</string>
+    <string name="expEdt_str_category">Category</string>
+    <string name="expEdt_str_save">Save</string>
+    <string name="expEdt_str_add">Add</string>
+    <string name="main_str_add">Add</string>
+    <string name="menu_str_edit">Edit</string>
+    <string name="menu_str_delete">Delete</string>
+    <string name="menu_str_sync">Sync</string>
+    <string name="toast_str_start_sync">Synchronizing Expenses</string>
+    <string name="toast_str_exporting_csv">Exporting Expenses as CSV</string>
+    <string name="menu_str_export">Export</string>
+    <string name="str_cam_msg">Press center button of D-Pad to take picture</string> 
+</resources>

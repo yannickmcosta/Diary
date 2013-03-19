@@ -1,0 +1,240 @@
+package com.ltree.expenses.data;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.BaseColumns;
+
+public final class Expense implements java.io.Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static final String AUTHORITY = "com.ltree.expenses.Expenses";	// How to explain?
+	
+	/** Key properties for the Expense object. Note they are public to avoid the overhead of virtual method invocation
+	 * (Android docs say this is up to 7 times faster!)
+	 */
+	public String description;
+	public double amount;
+	public long expenseDate;	
+
+	/**
+	 * Create an Expenses instance from a ContentValues object
+	 * @param values
+	 */
+	public Expense(ContentValues values){
+		description = values.getAsString(Expense.ExpenseItem.COLUMN_NAME_DESCRIPTION );
+		amount = values.getAsDouble(Expense.ExpenseItem.COLUMN_NAME_AMOUNT);
+		expenseDate = values.getAsLong(Expense.ExpenseItem.COLUMN_NAME_EXPENSE_DATE);
+	}
+	
+	public Expense(String description, double amount, long date ){
+		this.description = description;
+		this.amount = amount;
+		expenseDate = date;
+
+	}	
+	
+    /*
+     * Returns a ContentValues instance (a map) for this expenseInfo instance. This is useful for
+     * inserting a expenseInfo into a database.
+     */
+    public ContentValues getContentValues() {
+        // Gets a new ContentValues object
+        ContentValues v = new ContentValues();
+
+        // Adds map entries for the user-controlled fields in the map
+        v.put(Expense.ExpenseItem.COLUMN_NAME_DESCRIPTION, description);
+        v.put(Expense.ExpenseItem.COLUMN_NAME_AMOUNT, amount);
+        v.put(Expense.ExpenseItem.COLUMN_NAME_EXPENSE_DATE, expenseDate);
+        return v;
+
+    }    	
+	
+	/**
+	 * Constant definition to define the mapping of an Expense to the underlying database
+	 * Also provides constants to help define the Content Provider
+	 * @author Course 2771 Development Team
+	 *
+	 */
+	public static final class ExpenseItem implements BaseColumns {
+		
+        // This class cannot be instantiated
+        private ExpenseItem() {}
+
+        /**
+         * The table name offered by this provider
+         */
+        public static final String TABLE_NAME = "expenses";
+
+        /*
+         * URI definitions
+         */
+
+        /**
+         * The scheme part for this provider's URI
+         */
+        private static final String SCHEME = "content://";
+
+        /**
+         * Path parts for the URIs
+         */
+
+        /**
+         * Path part for the expenses URI
+         */
+        private static final String PATH_EXPENSES = "/expenses";
+
+        /**
+         * Path part for the expense ID URI
+         */
+        private static final String PATH_EXPENSE_ID = "/expenses/";
+
+        /**
+         * 0-relative position of a expense item ID segment in the path part of a expense item ID URI
+         */
+        public static final int EXPENSE_ID_PATH_POSITION = 1;
+
+
+        /**
+         * The content:// style URL for this table
+         */
+        public static final Uri CONTENT_URI =  Uri.parse(SCHEME + AUTHORITY + PATH_EXPENSES);
+        
+        /**
+         * The content URI base for a single expense item. Callers must
+         * append a numeric expense id to this Uri to retrieve an expense item
+         */
+        public static final Uri CONTENT_ID_URI_BASE
+            = Uri.parse(SCHEME + AUTHORITY + PATH_EXPENSE_ID);        
+        
+        /**
+         * The default sort order for this table
+         */
+        public static final String DEFAULT_SORT_ORDER = Expense.ExpenseItem.COLUMN_NAME_EXPENSE_DATE + " ASC";        
+        
+        
+        /*
+         * MIME type definitions
+         */
+
+        /**
+         * The MIME type of {@link #CONTENT_URI} providing a directory of expenses.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.ltree.expenses.expense";
+
+        /**
+         * The MIME type of a {@link #CONTENT_URI} sub-directory of a single expense item
+         * 
+         */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.ltree.expenses.expense";
+        
+        /*
+         * Column definitions
+         */
+
+        /**
+         * Column name for the description of the expense item
+         * <P>Type: TEXT</P>
+         */
+        public static final String COLUMN_NAME_DESCRIPTION = "description";
+
+        /**
+         * Column name of the expense item amount
+         * <P>Type: REAL</P>
+         */
+        public static final String COLUMN_NAME_AMOUNT = "amount";
+        
+        /**
+         * Column name for the creation timestamp
+         * <P>Type: INTEGER (long from System.curentTimeMillis())</P>
+         */
+        public static final String COLUMN_NAME_EXPENSE_DATE = "incurred";       
+        
+        
+        public static final String COLUMN_NAME_ID = BaseColumns._ID;
+        
+        /** Projection holding all the columns required to populate and Expense item */
+        public static final String[] FULL_PROJECTION = {
+                COLUMN_NAME_DESCRIPTION,
+                COLUMN_NAME_AMOUNT,
+                COLUMN_NAME_EXPENSE_DATE
+            };        
+        
+        public static final String[] LIST_PROJECTION =
+            new String[] {
+                Expense.ExpenseItem._ID,
+                Expense.ExpenseItem.COLUMN_NAME_DESCRIPTION,
+                Expense.ExpenseItem.COLUMN_NAME_AMOUNT
+        };            
+
+	}
+
+	public static final class Helper {
+		/**
+		 * Converts a cursor to an array of Expense 
+		 * Note that this method is "mean and lean" with little error checking.
+		 * It assumes that the projection used is ExpenseItem.FULL_PROJECTION
+		 * @param cursor A cursor loaded with Expense data
+		 * @return populated array of Expense
+		 */
+		public static final Expense[] getExpensesFromCursor(Cursor cursor){
+			Expense[] expenses = null;
+			int rows = cursor.getCount();
+			if(rows > 0){
+				expenses = new Expense[rows];
+				int i=0;
+				while(cursor.moveToNext()){
+					expenses[i++] = new Expense( cursor.getString(0), cursor.getDouble(1), cursor.getLong(2));
+				}
+			}
+			return expenses;
+		}
+		
+		public static final JSONObject expenseToJSON(Expense e) throws JSONException{
+			JSONObject jObj = new JSONObject();
+			jObj.put("description", e.description);
+			jObj.put("amount", e.amount);
+			jObj.put("expenseDate", e.expenseDate);
+			return jObj;
+		}
+		
+		public static final JSONArray expenseArrayToJSON(Expense[] expenses)  throws JSONException{
+			JSONArray jArray = new JSONArray();
+			System.out.println("Converting  " + expenses.length + " expenses to JSON");
+			for(Expense e: expenses){
+				jArray.put(expenseToJSON(e));
+			}
+			return jArray;
+		}	
+		public static final StringBuilder expenseArrayToCsv(Expense[] expenses){
+			StringBuilder result= new StringBuilder();
+			for(Expense e: expenses){
+				result.append(expenseToCsv(e));
+			}
+			return result;
+		}		
+		
+		public static final StringBuilder  expenseToCsv(Expense e){
+			StringBuilder builder = new StringBuilder();
+			builder.append(e.description);
+			builder.append(',');
+			builder.append(e.amount);
+			builder.append(',');
+			builder.append(e.expenseDate);
+			builder.append('\n');
+			return builder;
+		}	
+				
+	}
+	
+
+	
+}

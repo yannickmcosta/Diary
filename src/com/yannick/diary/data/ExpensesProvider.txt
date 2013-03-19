@@ -1,0 +1,68 @@
+// Update method body
+
+        int count;
+        // Does the update based on the incoming URI pattern
+        switch (sUriMatcher.match(uri)) {
+
+            // If the incoming URI matches the general expenses pattern, does the update based on
+            // the incoming data.
+            case EXPENSES:
+
+                // Does the update and returns the number of rows updated.
+                count = mDAO.updateExpenses(values, where, whereArgs);
+                break;
+
+            // If the incoming URI matches a single expense ID, does the update based on the incoming
+            // data, but modifies the where clause to restrict it to the particular expense ID.
+            case EXPENSES_ID:
+                // From the incoming URI, get the expense ID
+                int expenseId = Integer.parseInt(uri.getPathSegments().get(Expense.ExpenseItem.EXPENSE_ID_PATH_POSITION));
+                count = mDAO.updateExpenseById(expenseId, values);
+                break;
+            // If the incoming pattern is invalid, throws an exception.
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+
+        /*Gets a handle to the content resolver object for the current context, and notifies it
+         * that the incoming URI changed. The object passes this along to the resolver framework,
+         * and observers that have registered themselves for the provider are notified.
+         */
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        // Returns the number of rows updated.
+        return count;
+        
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete method body
+
+        int count;
+
+        // Does the delete based on the incoming URI pattern.
+        switch (sUriMatcher.match(uri)) {
+
+            // If the incoming pattern matches the general pattern for expenses, does a delete
+            // based on the incoming "where" columns and arguments.
+            case EXPENSES:
+            	count = mDAO.deleteExpenses(where, whereArgs);
+            	break;
+                // If the incoming URI matches a single expense ID, does the delete based on the
+                // incoming data, but modifies the where clause to restrict it to the
+                // particular expense ID.
+            case EXPENSES_ID:
+            	int expenseId = Integer.parseInt(uri.getPathSegments().get(Expense.ExpenseItem.EXPENSE_ID_PATH_POSITION));
+            	count = mDAO.deleteExpensesById(expenseId);
+                break;
+
+            // If the incoming pattern is invalid, throws an exception.
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+        /*Gets a handle to the content resolver object for the current context, and notifies it
+         * that the incoming URI changed. The object passes this along to the resolver framework,
+         * and observers that have registered themselves for the provider are notified.
+         */
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        // Returns the number of rows deleted.
+        return count;

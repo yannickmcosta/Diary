@@ -26,10 +26,15 @@ R.java organized.
 		android:id="@+id/expEdt_tv_description" android:text="@string/expEdt_str_description"></TextView>
 	<EditText android:layout_height="wrap_content"
 		android:layout_width="match_parent" android:id="@+id/expEdt_et_description"></EditText>
-	<TextView android:layout_height="wrap_content"
-		android:layout_width="wrap_content" android:id="@+id/expEdt_tv_amount" android:text="@string/expEdt_str_amount"></TextView>
+
+	<TextView
+	    android:id="@+id/expEdt_tv_title"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/expEdt_str_title" >
+</TextView>
 	<EditText android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:id="@+id/expEdt_et_amount"></EditText>
+		android:layout_width="match_parent" android:id="@+id/expEdt_et_title"></EditText>
 	<LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent" android:baselineAligned="true">
 		<ImageButton android:id="@+id/expEdt_ib_receipt" android:layout_height="wrap_content" android:layout_width="wrap_content" android:src="@drawable/camera"></ImageButton>
 		<Button android:id="@+id/expEdt_bt_save" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="bottom" android:text="@string/expEdt_str_save"></Button>

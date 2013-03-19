@@ -5,7 +5,6 @@
     <string name="expEdt_str_date">Date</string>
     <string name="expEdt_str_title">Title</string>
     <string name="expEdt_str_description">Description (May have multiple lines)</string>
-    <string name="expEdt_str_amount">Amount</string>
     <string name="expEdt_str_category">Category</string>
     <string name="expEdt_str_save">Save</string>
     <string name="expEdt_str_add">Add</string>

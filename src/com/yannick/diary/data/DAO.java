@@ -38,7 +38,7 @@ public class DAO {
         // Maps the string "_ID" to the column name "_ID"
         sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_ID, Diary.DiaryItem.COLUMN_NAME_ID);     
         sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_DESCRIPTION, Diary.DiaryItem.COLUMN_NAME_DESCRIPTION);  
-        sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_AMOUNT, Diary.DiaryItem.COLUMN_NAME_AMOUNT);  
+        sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_TITLE, Diary.DiaryItem.COLUMN_NAME_TITLE);  
         sDiaryProjectionMap.put(Diary.DiaryItem.COLUMN_NAME_DIARY_DATE, Diary.DiaryItem.COLUMN_NAME_DIARY_DATE);  
             	
     }
@@ -142,8 +142,9 @@ public class DAO {
      }
 
      // If the values map doesn't contain note text, sets the amount to 0.0f.
-     if (diaryValues.containsKey(Diary.DiaryItem.COLUMN_NAME_AMOUNT) == false) {
-         diaryValues.put(Diary.DiaryItem.COLUMN_NAME_AMOUNT, 0.0f);
+     if (diaryValues.containsKey(Diary.DiaryItem.COLUMN_NAME_TITLE) == false) {
+    	 Resources r = Resources.getSystem();
+         diaryValues.put(Diary.DiaryItem.COLUMN_NAME_TITLE, r.getString(android.R.string.untitled));
      }
      
      // Opens the database object in "write" mode.

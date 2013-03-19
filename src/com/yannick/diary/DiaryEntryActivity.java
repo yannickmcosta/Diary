@@ -37,7 +37,7 @@ public class DiaryEntryActivity extends Activity {
 	private TextView mDateDisplay;
 	private Button mSaveButton;
 	private TextView mDescription;
-	private TextView mAmount;
+	private TextView mTitle;
 	@SuppressWarnings("unused")
 	private TextView mDiaryDate;
 	private ImageButton mReceiptButton;
@@ -65,7 +65,7 @@ public class DiaryEntryActivity extends Activity {
 		mDateDisplay = (TextView) findViewById(R.id.expEdt_et_date);
 		mSaveButton = (Button) findViewById(R.id.expEdt_bt_save);
 		mDescription = (EditText) findViewById(R.id.expEdt_et_description);
-		mAmount = (TextView) findViewById(R.id.expEdt_et_amount);
+		mTitle = (TextView) findViewById(R.id.expEdt_et_title);
 		mDiaryDate = (TextView) findViewById(R.id.expEdt_et_date);
 		mReceiptButton = (ImageButton) findViewById(R.id.expEdt_ib_receipt);
 		mReceiptImg = (ImageView) findViewById(R.id.expEdt_im_receipt);
@@ -149,7 +149,7 @@ public class DiaryEntryActivity extends Activity {
 		// Note that we are not checking the field content here but the provider
 		// code does do the checking
 		values.put(Diary.DiaryItem.COLUMN_NAME_DIARY_DATE, getDateInMillisFromDateFields());
-		values.put(Diary.DiaryItem.COLUMN_NAME_AMOUNT, mAmount.getText()
+		values.put(Diary.DiaryItem.COLUMN_NAME_TITLE, mTitle.getText()
 				.toString());
 		
 		// Create a new element in the values object with a key of Diary.DiaryItemCOLUMN_NAME_DESCRIPTION
@@ -188,7 +188,7 @@ public class DiaryEntryActivity extends Activity {
 
 				// Note how the view elements are populated from the cursor content
 				mDescription.setText(mCursor.getString(0));
-				mAmount.setText(mCursor.getString(1));
+				mTitle.setText(mCursor.getString(1));
 				//mDiaryDate.setText(mCursor.getLong(2) + "");	// Coerce the long to a String with  + ""
 				getDateFieldsFromMillis(mCursor.getLong(2));
 				updateDateDisplay();

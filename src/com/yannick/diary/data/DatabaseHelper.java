@@ -7,15 +7,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "expenses.db";	// Should this be qualified?
+	private static final String DATABASE_NAME = "diary.db";	// Should this be qualified?
 
 	private static final int DATABASE_VERSION = 1;
 
-    private static final String EXPENSES_TABLE_CREATE =
+    private static final String DIARY_TABLE_CREATE =
                 "CREATE TABLE " + Diary.DiaryItem.TABLE_NAME + " (" +
                 Diary.DiaryItem.COLUMN_NAME_ID + " INTEGER PRIMARY KEY," + 
                 Diary.DiaryItem.COLUMN_NAME_DESCRIPTION + " TEXT, " +
-                Diary.DiaryItem.COLUMN_NAME_AMOUNT + " REAL, " + 
+                Diary.DiaryItem.COLUMN_NAME_TITLE + " REAL, " + 
                 Diary.DiaryItem.COLUMN_NAME_DIARY_DATE + " REAL " +
                 ");";
     
@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		// NOTE: the db passed in here seems to be linked to the file system
 		// The exec does effect the database.
-		db.execSQL(EXPENSES_TABLE_CREATE);
+		db.execSQL(DIARY_TABLE_CREATE);
 	}
 
 	/**

@@ -22,7 +22,7 @@ public final class Diary implements java.io.Serializable{
 	 * (Android docs say this is up to 7 times faster!)
 	 */
 	public String description;
-	public double amount;
+	public String title;
 	public long diaryDate;	
 
 	/**
@@ -31,13 +31,13 @@ public final class Diary implements java.io.Serializable{
 	 */
 	public Diary(ContentValues values){
 		description = values.getAsString(Diary.DiaryItem.COLUMN_NAME_DESCRIPTION );
-		amount = values.getAsDouble(Diary.DiaryItem.COLUMN_NAME_AMOUNT);
+		title = values.getAsString(Diary.DiaryItem.COLUMN_NAME_TITLE);
 		diaryDate = values.getAsLong(Diary.DiaryItem.COLUMN_NAME_DIARY_DATE);
 	}
 	
-	public Diary(String description, double amount, long date ){
+	public Diary(String description, String title, long date ){
 		this.description = description;
-		this.amount = amount;
+		this.title = title;
 		diaryDate = date;
 
 	}	
@@ -52,7 +52,7 @@ public final class Diary implements java.io.Serializable{
 
         // Adds map entries for the user-controlled fields in the map
         v.put(Diary.DiaryItem.COLUMN_NAME_DESCRIPTION, description);
-        v.put(Diary.DiaryItem.COLUMN_NAME_AMOUNT, amount);
+        v.put(Diary.DiaryItem.COLUMN_NAME_TITLE, title);
         v.put(Diary.DiaryItem.COLUMN_NAME_DIARY_DATE, diaryDate);
         return v;
 
@@ -150,7 +150,7 @@ public final class Diary implements java.io.Serializable{
          * Column name of the expense item amount
          * <P>Type: REAL</P>
          */
-        public static final String COLUMN_NAME_AMOUNT = "amount";
+        public static final String COLUMN_NAME_TITLE = "title";
         
         /**
          * Column name for the creation timestamp
@@ -164,7 +164,7 @@ public final class Diary implements java.io.Serializable{
         /** Projection holding all the columns required to populate and Expense item */
         public static final String[] FULL_PROJECTION = {
                 COLUMN_NAME_DESCRIPTION,
-                COLUMN_NAME_AMOUNT,
+                COLUMN_NAME_TITLE,
                 COLUMN_NAME_DIARY_DATE
             };        
         
@@ -172,7 +172,7 @@ public final class Diary implements java.io.Serializable{
             new String[] {
                 Diary.DiaryItem._ID,
                 Diary.DiaryItem.COLUMN_NAME_DESCRIPTION,
-                Diary.DiaryItem.COLUMN_NAME_AMOUNT
+                Diary.DiaryItem.COLUMN_NAME_TITLE
         };            
 
 	}
@@ -192,7 +192,7 @@ public final class Diary implements java.io.Serializable{
 				diary = new Diary[rows];
 				int i=0;
 				while(cursor.moveToNext()){
-					diary[i++] = new Diary( cursor.getString(0), cursor.getDouble(1), cursor.getLong(2));
+					diary[i++] = new Diary( cursor.getString(0), cursor.getString(1), cursor.getLong(2));
 				}
 			}
 			return diary;
@@ -201,7 +201,7 @@ public final class Diary implements java.io.Serializable{
 		public static final JSONObject diaryToJSON(Diary e) throws JSONException{
 			JSONObject jObj = new JSONObject();
 			jObj.put("description", e.description);
-			jObj.put("amount", e.amount);
+			jObj.put("title", e.title);
 			jObj.put("diaryDate", e.diaryDate);
 			return jObj;
 		}
@@ -226,7 +226,7 @@ public final class Diary implements java.io.Serializable{
 			StringBuilder builder = new StringBuilder();
 			builder.append(e.description);
 			builder.append(',');
-			builder.append(e.amount);
+			builder.append(e.title);
 			builder.append(',');
 			builder.append(e.diaryDate);
 			builder.append('\n');

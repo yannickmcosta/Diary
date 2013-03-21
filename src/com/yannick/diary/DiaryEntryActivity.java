@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.yannick.diary.data.Diary;
 import com.yannick.diary.R;
+import com.yannick.location.*;
 
 public class DiaryEntryActivity extends Activity {
 
@@ -54,7 +55,7 @@ public class DiaryEntryActivity extends Activity {
 	
 	private TextView mLatitude;
 	private TextView mLongitude;
-
+		
 	private long mDiaryId; // Diary item associated with this activity
 	private Uri mUri;
 	private Cursor mCursor;	
@@ -356,9 +357,11 @@ public class DiaryEntryActivity extends Activity {
 		    	mReceiptImg.setImageDrawable(camImage);	        	
 
 	        } else if (resultCode == RESULT_CANCELED) {
-	            Toast.makeText(this, "Picture was not taken", Toast.LENGTH_SHORT);
+	            Toast nottaken = Toast.makeText(this, "Picture was not taken", Toast.LENGTH_SHORT);
+	            nottaken.show();
 	        } else {
-	            Toast.makeText(this, "Picture was not taken", Toast.LENGTH_SHORT);
+	            Toast nottaken = Toast.makeText(this, "Picture was not taken", Toast.LENGTH_SHORT);
+	            nottaken.show();
 	        }
 	    }
 	}

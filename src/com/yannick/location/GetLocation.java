@@ -13,96 +13,80 @@ import android.os.Bundle;
 import android.widget.Toast;
 //import com.yannick.diary.R;
 
-public class GetLocation extends Activity implements LocationListener {
-  private LocationManager locationManager;
-  private String provider;
+public class GetLocation implements LocationListener {
+  private static LocationManager locationManager;
+  private static Context mContext;
+  private static String provider;
+  private double GPSLat;
+  private double GPSLon;
 
+	public GetLocation(Context context) {
+		mContext = context;
+	}
   
-  public double getLatitude() {
-	  locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+  public void getLatitude(double GPSLat) {
+	  locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 	  locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
 	  Location location = locationManager.getLastKnownLocation(provider);
-	  return (double) (location.getLatitude());
+	  this.setGPSLat((location.getLatitude()));
+	  //return (double) (location.getLatitude());
   };
   
-  public double getLongitude() {
-	  locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+  public void getLongitude(double GPSLon) {
+	  locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 	  locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
 	  Location location = locationManager.getLastKnownLocation(provider);
-	  return (double) (location.getLongitude());  
+	  this.GPSLon = (location.getLongitude());
+	  //return (double) (location.getLongitude());  
   };
   
-/** Called when the activity is first created. */
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    //setContentView(R.layout.activity_show_location);
-    //mlatituteField = (TextView) findViewById(R.id.locEdt_et_lat);
-    //mlongitudeField = (TextView) findViewById(R.id.locEdt_et_lon);
-    //providerField = (TextView) findViewById(R.id.GPSprov1);
-
-    // Get the location manager
-    //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    // Define the criteria how to select the location provider -> use
-    // default
-    //Criteria criteria = new Criteria();
-    //provider = locationManager.getBestProvider(criteria, false);
-    //Location location = locationManager.getLastKnownLocation(provider);
-
-    // Initialize the location fields
-    //if (location != null) {
-    //  System.out.println("Provider " + provider + " has been selected.");
-    //  onLocationChanged(location);
-    //} else {
-    //  mlatituteField.setText("Location not available");
-    // mlongitudeField.setText("Location not available");
-    //  mproviderField.setText("Provider Not Available");
-   // }
+  public Location getLocation() { 
+	  locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+	  if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+		  provider = LocationManager.GPS_PROVIDER;
+	  } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+		  provider = LocationManager.NETWORK_PROVIDER;
+	  } else {
+		  // FAIL
+	  }
+	  locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
+	  return locationManager.getLastKnownLocation(provider);
   }
+  // try this by doing GetLocation.getLocation().getLongitude();
+    
+public double getGPSLat() {
+	return GPSLat;
+}
 
-  /* Request updates at startup */
-  @Override
-  protected void onResume() {
-    super.onResume();
-    locationManager.requestLocationUpdates(provider, 400, 1, this);
-  }
+public void setGPSLat(double gPSLat) {
+	GPSLat = gPSLat;
+}
 
-  /* Remove the locationlistener updates when Activity is paused */
-  @Override
-  protected void onPause() {
-    super.onPause();
-    locationManager.removeUpdates(this);
-  }
+public double getGPSLon() {
+	return GPSLon;
+}
 
-  @TargetApi(Build.VERSION_CODES.GINGERBREAD)
-//@Override
-  public void onLocationChanged(Location location) {
-	locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
-    //double lat = (double) (location.getLatitude());
-    //double lng = (double) (location.getLongitude());
-    //String prov = (String) (provider);
-    //mlatituteField.setText(String.valueOf(lat));
-    //mlongitudeField.setText(String.valueOf(lng));
-    //mproviderField.setText(String.valueOf(prov));
-  }
+public void setGPSLon(double gPSLon) {
+	GPSLon = gPSLon;
+}
 
-  //@Override
-  public void onStatusChanged(String provider, int status, Bundle extras) {
-    // TODO Auto-generated method stub
+public void onLocationChanged(Location location) {
+	// TODO Auto-generated method stub
+	
+}
 
-  }
+public void onProviderDisabled(String provider) {
+	// TODO Auto-generated method stub
+	
+}
 
-  //@Override
-  public void onProviderEnabled(String provider) {
-    Toast.makeText(this, "Enabled new provider " + provider,
-        Toast.LENGTH_SHORT).show();
+public void onProviderEnabled(String provider) {
+	// TODO Auto-generated method stub
+	
+}
 
-  }
-
-  //@Override
-  public void onProviderDisabled(String provider) {
-    Toast.makeText(this, "Disabled provider " + provider,
-        Toast.LENGTH_SHORT).show();
-  }
+public void onStatusChanged(String provider, int status, Bundle extras) {
+	// TODO Auto-generated method stub
+	
+}
 } 

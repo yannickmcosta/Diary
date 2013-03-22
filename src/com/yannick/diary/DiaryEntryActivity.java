@@ -2,6 +2,7 @@ package com.yannick.diary;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.Set;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -28,12 +29,14 @@ import android.widget.Toast;
 
 import com.yannick.diary.data.Diary;
 import com.yannick.diary.R;
-import com.yannick.location.*;
+import com.yannick.location.GetLocation;
 
 public class DiaryEntryActivity extends Activity {
 
 	private static final String TAG = "DiaryEntryActivity";
 	public static final int CAM_REQUEST_CODE = 103;	
+	
+	private GetLocation getLoc;
 	
 	private TextView mDateDisplay;
 	private Button mSaveButton;
@@ -56,6 +59,9 @@ public class DiaryEntryActivity extends Activity {
 	private TextView mLatitude;
 	private TextView mLongitude;
 		
+	//private mLatitude;
+	
+
 	private long mDiaryId; // Diary item associated with this activity
 	private Uri mUri;
 	private Cursor mCursor;	
@@ -79,6 +85,12 @@ public class DiaryEntryActivity extends Activity {
 		mLatitude = (TextView) findViewById(R.id.locEdt_et_lat);
 		mLongitude = (TextView) findViewById(R.id.locEdt_et_lon);
 		
+		getLoc = new GetLocation(this);
+		
+		mLatitude.setText("" + getLoc.getLocation().getLatitude());
+		mLongitude.setText("" + getLoc.getLocation().getLongitude());
+		
+		Log.i(TAG, "Location: " + getLoc.getLocation().getLatitude() + ", " + getLoc.getLocation().getLongitude());
 
 		// Call local helper method configureCursorForActivity()
 		configureCursorForActivity();
@@ -159,13 +171,14 @@ public class DiaryEntryActivity extends Activity {
 		// Note that we are not checking the field content here but the provider
 		// code does do the checking
 		values.put(Diary.DiaryItem.COLUMN_NAME_DIARY_DATE, getDateInMillisFromDateFields());
-		values.put(Diary.DiaryItem.COLUMN_NAME_TITLE, mTitle.getText()
-				.toString());
+		values.put(Diary.DiaryItem.COLUMN_NAME_TITLE, mTitle.getText().toString());
 		
 		// Create a new element in the values object with a key of Diary.DiaryItemCOLUMN_NAME_DESCRIPTION
 		// and the value from the mDescription view element (see the lines above for a template)
-		values.put(Diary.DiaryItem.COLUMN_NAME_DESCRIPTION, mDescription
-				.getText().toString());
+		values.put(Diary.DiaryItem.COLUMN_NAME_DESCRIPTION, mDescription.getText().toString());
+		values.put(Diary.DiaryItem.COLUMN_NAME_LATITUDE, mLatitude.getText().toString());
+		values.put(Diary.DiaryItem.COLUMN_NAME_LONGITUDE, mLongitude.getText().toString());
+		
 
 		// Provider URL sent with the original intent
 		// Call the update method on the ContentResolver to update the data with the

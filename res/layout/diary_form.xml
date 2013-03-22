@@ -40,17 +40,24 @@ R.java organized.
 		<ImageButton android:id="@+id/expEdt_ib_receipt" android:layout_height="wrap_content" android:layout_width="wrap_content" android:src="@drawable/camera"></ImageButton>
 		<Button android:id="@+id/expEdt_bt_save" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="bottom" android:text="@string/expEdt_str_save"></Button>
 
-		<TextView
-		    android:id="@+id/locEdt_et_lat"
+		<LinearLayout
 		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="@string/locEdt_str_lat" />
+		    android:layout_height="match_parent"
+		    android:orientation="vertical" >
 
-		<TextView
-		    android:id="@+id/locEdt_et_lon"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="@string/locEdt_str_lon" />
+		    <TextView
+		        android:id="@+id/locEdt_et_lat"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/locEdt_str_lat" />
+
+		    <TextView
+		        android:id="@+id/locEdt_et_lon"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/locEdt_str_lon" />
+
+		</LinearLayout>
 
 	</LinearLayout>
 	<ImageView android:layout_height="wrap_content" android:layout_width="wrap_content"  android:id="@+id/expEdt_im_receipt"></ImageView>
